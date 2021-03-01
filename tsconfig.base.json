@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@simple-nx-workspace/custom-elements": [
+        "libs/custom-elements/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

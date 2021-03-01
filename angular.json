@@ -29,6 +29,16 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/gatsby": {
+      "application": {
+        "style": "scss"
+      }
     }
   },
   "projects": {
@@ -117,28 +127,64 @@
         }
       }
     },
-    "app1-e2e": {
-      "root": "apps/app1-e2e",
-      "sourceRoot": "apps/app1-e2e/src",
-      "projectType": "application",
+    "custom-elements": {
+      "projectType": "library",
+      "root": "libs/custom-elements",
+      "sourceRoot": "libs/custom-elements/src",
+      "prefix": "simple-nx-workspace",
       "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "cypressConfig": "apps/app1-e2e/cypress.json",
-            "tsConfig": "apps/app1-e2e/tsconfig.e2e.json",
-            "devServerTarget": "app1:serve"
+            "outputPath": "dist/libs/custom-elements",
+            "index": "libs/custom-elements/src/lib/index.html",
+            "main": "libs/custom-elements/src/lib/main.ts",
+            "tsConfig": "libs/custom-elements/tsconfig.lib.json",
+            "aot": true,
+            "assets": [],
+            "styles": [],
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "devServerTarget": "app1:serve:production"
+              "fileReplacements": [],
+              "optimization": true,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/app1-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "libs/custom-elements/src/**/*.ts",
+              "libs/custom-elements/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/custom-elements"],
+          "options": {
+            "jestConfig": "libs/custom-elements/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
